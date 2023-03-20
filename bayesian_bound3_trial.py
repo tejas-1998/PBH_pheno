@@ -205,7 +205,7 @@ pos = soln.x + 1e-5*np.random.randn(32, 3)
 nwalkers, ndim = pos.shape
 
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability)
-sampler.run_mcmc(pos, 15000, progress=True)
+sampler.run_mcmc(pos, 150000, progress=True)
 
 labels = ["fPBH", "mu_BH", "csin"]
 samples = sampler.get_chain()
@@ -216,7 +216,7 @@ for idim in range(ndim):
 	plt.ylabel(labels[idim])
 	plt.xlabel("Number of steps")
 	plt.title("Plot of "+labels[idim]+" as a function of number of steps, for 40 M_sol black hole")
-	plt.savefig("bayesian_bound3_15000_"+labels[idim]+"_40Msol.png")
+	plt.savefig("bayesian_bound3_150000_"+labels[idim]+"_40Msol.png")
 	#plt.show()
 	
 flat_samples = sampler.get_chain(discard=100, thin=15, flat=True)
@@ -224,16 +224,16 @@ print(flat_samples.shape)
 
 ##Store the data of histogram
 
-fn1 = open('/home/tejas/bayesian3_data_15000_40Msol.txt', 'w')
+fn1 = open('/home/tejas/bayesian3_data_150000_40Msol.txt', 'w')
 for i in range(len(flat_samples)):
 	print(flat_samples[i][0], flat_samples[i][1], flat_samples[i][2], file = fn1)
 
 fn1.close()
 
 fig = corner.corner(flat_samples, labels=labels, truths=f_ml)
-fig.savefig("bayesian_posterior_multi_40Msol_15000.png")
+fig.savefig("bayesian_posterior_multi_40Msol_150000.png")
 
-ftau = open("/home/tejas/bayesian3_tau_trial_15000_40Msol.txt", "w")
+ftau = open("/home/tejas/bayesian3_tau_trial_150000_40Msol.txt", "w")
 
 tau = sampler.get_autocorr_time()
 print(tau, file=ftau)
